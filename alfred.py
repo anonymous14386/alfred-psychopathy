@@ -31,7 +31,6 @@ async def on_ready():
     print("Alfred online")
     channel = bot.get_channel(CHANNEL_ID)
 
-
 @bot.command()
 async def help(ctx):
     help = discord.Embed(title="Help:")
@@ -40,7 +39,7 @@ async def help(ctx):
 
     help.add_field(name="Pokedex:", value="poke rand: Returns a random pokemon\npoke (num or name): Returns a specific pokemon", inline=False)
 
-    help.add_field(name="Tarot:", value="tarot (x): Returns x amount of Tarot cards", inline=False)
+    help.add_field(name="Tarot:", value="tarot (deck) (x): Returns x amount of Tarot cards in selected deck. Decks options are 1 for default and 2 for Abby's cards", inline=False)
 
     help.add_field(name="binary:", value="binary: returns base 10 of a binary value")
 
@@ -49,7 +48,6 @@ async def help(ctx):
     help.add_field(name="Crypto", value="btc: returns market data \n ltc: returns market data \n xmr: returns market data \n eth: returns market data \n ethc: returns market data")
 
     await ctx.send(embed=help)
-
 
 @bot.command()
 async def poke(ctx,arg):
@@ -303,11 +301,8 @@ async def poke(ctx,arg):
     embed.set_image(url=image)
     await ctx.send(embed = embed)
 
-
 @bot.command()
-async def tarot(ctx, amount: int):
-
-    deck = 1
+async def tarot(ctx, deck:int, amount: int):
 
 
     for i in range(amount):
@@ -350,15 +345,14 @@ async def tarot(ctx, amount: int):
         print("Desc: " + description)
         print("File: " + fileName)
 
-        deck = str(1)
 
         capitalized_description = description[0].upper() + description[1:]
 
         cardEmbed = discord.Embed(title=name, description=capitalized_description, colour=0xC000FF)
 
-        print ("https://www.octopustechnology.net/Alfred/Tarot/" + deck + "/" + fileName)
+        print ("http://www.rubberroomwithrats.com/Alfred/Tarot/" + str(deck) + "/" + fileName)
 
-        cardEmbed.set_image(url="https://www.octopustechnology.net/Alfred/Tarot/" + deck + "/" + fileName)
+        cardEmbed.set_image(url="http://www.rubberroomwithrats.com/Alfred/Tarot/" + str(deck) + "/" + fileName)
 
         await ctx.send(embed=cardEmbed)
 
@@ -371,7 +365,6 @@ async def tarot(ctx, amount: int):
 
         #out = discord.Embed(title=cardName, description=position + cardDesc ,colour=0xC000FF)
         #await ctx.send( embed=out)
-
 
 @bot.command()
 async def geoip(ctx, ip):
@@ -406,7 +399,6 @@ async def geoip(ctx, ip):
     geoip.add_field(name="ISP: ", value=isp)
 
     await ctx.send(embed=geoip)
-
 
 @bot.command()
 async def btc(ctx):
