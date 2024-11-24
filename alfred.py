@@ -45,7 +45,9 @@ async def help(ctx):
 
     help.add_field(name="Tarot:", value="tarot (deck) (x): Returns x amount of Tarot cards in selected deck. Decks options are 1 for default and 2 for Abby's cards", inline=False)
 
-    help.add_field(name="binary:", value="binary: returns base 10 of a binary value")
+    help.add_field(name="Binary:", value="dec2bin: returns decimal value of binary input\nbin2dec: returns base 10 of a binary value")
+
+    help.add_field(name="Hex:", value="dec2hex: returns decimal value of binary input\nhex2dec: returns base 10 of a binary value")
 
     help.add_field(name="Geoip:", value="geoip (domain or ip): returns geoip info on a target")
 
@@ -483,9 +485,11 @@ async def xrp(ctx):
     await ctx.send(embed=xrpEmb)
 #END CRYPTO
 
-#Binary conversion
+#Base conversion
+#Binary
+#to
 @bot.command()
-async def binary(ctx,arg):
+async def dec2bin(ctx,arg):
     uInput = arg
 
     apiURL = ("https://networkcalc.com/api/binary/" + uInput + "?from=10&to=2")
@@ -496,6 +500,48 @@ async def binary(ctx,arg):
     binEmb.add_field(name=(convJson["converted"]), value="")
 
     await ctx.send(embed=binEmb)
+#from
+@bot.command()
+async def bin2dec(ctx,arg):
+    uInput = arg
+
+    apiURL = ("https://networkcalc.com/api/binary/" + uInput + "?from=2&to=10")
+    convData = requests.get(apiURL)
+    convJson = convData.json()
+
+    binEmb = discord.Embed(title=(uInput + " in decimal"))
+    binEmb.add_field(name=(convJson["converted"]), value="")
+
+    await ctx.send(embed=binEmb)
+
+#Hex
+#to
+@bot.command()
+async def dec2hex(ctx,arg):
+    uInput = arg
+
+    apiURL = ("https://networkcalc.com/api/binary/" + uInput + "?from=10&to=16")
+    convData = requests.get(apiURL)
+    convJson = convData.json()
+
+    binEmb = discord.Embed(title=(uInput + " in hex"))
+    binEmb.add_field(name=(convJson["converted"]), value="")
+
+    await ctx.send(embed=binEmb)
+#from
+@bot.command()
+async def hex2dec(ctx,arg):
+    uInput = arg
+
+    apiURL = ("https://networkcalc.com/api/binary/" + uInput + "?from=16&to=10")
+    convData = requests.get(apiURL)
+    convJson = convData.json()
+
+    binEmb = discord.Embed(title=(uInput + " in decimal"))
+    binEmb.add_field(name=(convJson["converted"]), value="")
+
+    await ctx.send(embed=binEmb)
+
 
 #HASHING
 #MD5 hash
