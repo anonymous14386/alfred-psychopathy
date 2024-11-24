@@ -49,9 +49,9 @@ async def help(ctx):
 
     help.add_field(name="Geoip:", value="geoip (domain or ip): returns geoip info on a target")
 
-    help.add_field(name="Crypto", value="btc: returns market data \n ltc: returns market data \n xmr: returns market data \n eth: returns market data \n ethc: returns market data \n doge: returns market data \n xrp: returns market data")
+    help.add_field(name="Crypto:", value="btc: returns market data \n ltc: returns market data \n xmr: returns market data \n eth: returns market data \n ethc: returns market data \n doge: returns market data \n xrp: returns market data")
 
-    help.add_field(name="Hash", value="md5 (val), returns md5 hashed input\n sha256 (val) returns sha256 hashed input\n sha512 (val) returns sha512 hashed input")
+    help.add_field(name="Hash:", value="md5 (val), returns md5 hashed input\n sha256 (val) returns sha256 hashed input\n sha512 (val) returns sha512 hashed input")
 
     await ctx.send(embed=help)
 
