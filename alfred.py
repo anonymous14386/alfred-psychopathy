@@ -14,6 +14,7 @@ intents.message_content = True
 with open("config.json") as f:
     data = json.load(f)
 
+
 #Pull from cards.json
 with open("cards.json") as f:
     cardData = json.load(f)
@@ -26,11 +27,13 @@ PREFIX = data["command-prefix"]
 bot = commands.Bot(command_prefix=PREFIX, intents=discord.Intents.all())
 bot.remove_command('help')
 
+#On server join do
 @bot.event
 async def on_ready():
     print("Alfred online")
     channel = bot.get_channel(CHANNEL_ID)
 
+#Help menu
 @bot.command()
 async def help(ctx):
     help = discord.Embed(title="Help:")
@@ -45,10 +48,11 @@ async def help(ctx):
 
     help.add_field(name="Geoip:", value="geoip (domain or ip): returns geoip info on a target")
 
-    help.add_field(name="Crypto", value="btc: returns market data \n ltc: returns market data \n xmr: returns market data \n eth: returns market data \n ethc: returns market data")
+    help.add_field(name="Crypto", value="btc: returns market data \n ltc: returns market data \n xmr: returns market data \n eth: returns market data \n ethc: returns market data \n doge: returns market data \n xrp: returns market data")
 
     await ctx.send(embed=help)
 
+#Pokedex
 @bot.command()
 async def poke(ctx,arg):
 
@@ -133,15 +137,6 @@ async def poke(ctx,arg):
         embed = discord.Embed(colour=typeColor)
         embed.add_field(name=pokeListData[query], value="Type: " + pokeTypeData[query] + "\nNumber: " + pokeNumberData)
 
-#debug
-        print (query)
-        print ("Name: " + pokeListData[query])
-        print ("Number: " + pokeNumberData)
-        print ("Type: " + pokeTypeData[query])
-        print("You entered: " + pokeNumberData + " and it was numeric")
-#/debug
-
-
     elif uInput.lower() == "rand":
 
         randNum = random.randint(1, 1025)
@@ -214,14 +209,6 @@ async def poke(ctx,arg):
         embed = discord.Embed(colour=typeColor)
         embed.add_field(name=pokeListData[query], value="Type: " + pokeTypeData[query] + "\nNumber: " + pokeNumberData)
 
-#debug
-        print (query)
-        print ("Name: " + pokeListData[query])
-        print ("Number: " + pokeNumberData)
-        print ("Type: " + pokeTypeData[query])
-        print("You entered: " + pokeNumberData + " and it was numeric")
-#/debug
-
     else:
         inLower = uInput.lower()
         pokeNum = (pokeLowerListData.index(inLower) + 1)
@@ -292,15 +279,10 @@ async def poke(ctx,arg):
         embed = discord.Embed(colour=typeColor)
         embed.add_field(name=pokeListData[query], value="Type: " + pokeTypeData[query] + "\nNumber: " + pokeNumberData)
 
-#debug
-        print ("Number: " + str(pokeNum))
-        print ("Name: " + pokeListData[pokeNum - 1])
-        print ("Type: " + pokeTypeData[pokeNum - 1])
-#/debug
-
     embed.set_image(url=image)
     await ctx.send(embed = embed)
 
+#Tarot
 @bot.command()
 async def tarot(ctx, deck:int, amount: int):
 
@@ -356,16 +338,7 @@ async def tarot(ctx, deck:int, amount: int):
 
         await ctx.send(embed=cardEmbed)
 
-
-
-
-        #out = discord.Embed(title=cardName, description=position + cardDesc ,colour=0xC000FF)
-        #await ctx.send( embed=out)
-
-
-        #out = discord.Embed(title=cardName, description=position + cardDesc ,colour=0xC000FF)
-        #await ctx.send( embed=out)
-
+#Geoip
 @bot.command()
 async def geoip(ctx, ip):
     apiURL = 'http://ip-api.com/json/' + ip
@@ -400,6 +373,8 @@ async def geoip(ctx, ip):
 
     await ctx.send(embed=geoip)
 
+#CRYPTO COMMANDS:
+#Bitcoin
 @bot.command()
 async def btc(ctx):
     apiURL = 'https://api.coinlore.net/api/ticker/?id=90'
@@ -414,6 +389,7 @@ async def btc(ctx):
 
     await ctx.send(embed=btcEmb)
 
+#Monero
 @bot.command()
 async def xmr(ctx):
     apiURL = 'https://api.coinlore.net/api/ticker/?id=28'
@@ -428,6 +404,7 @@ async def xmr(ctx):
 
     await ctx.send(embed=xmrEmb)
 
+#Ethereum
 @bot.command()
 async def eth(ctx):
     apiURL = 'https://api.coinlore.net/api/ticker/?id=80'
@@ -442,6 +419,7 @@ async def eth(ctx):
 
     await ctx.send(embed=ethEmb)
 
+#Ethereum Classic
 @bot.command()
 async def ethc(ctx):
     apiURL = 'https://api.coinlore.net/api/ticker/?id=118'
@@ -456,6 +434,7 @@ async def ethc(ctx):
 
     await ctx.send(embed=ethcEmb)
 
+#LiteCoin
 @bot.command()
 async def ltc(ctx):
     apiURL = 'https://api.coinlore.net/api/ticker/?id=1'
@@ -470,6 +449,38 @@ async def ltc(ctx):
 
     await ctx.send(embed=ltcEmb)
 
+#DogeCoin
+@bot.command()
+async def doge(ctx):
+    apiURL = 'https://api.coinlore.net/api/ticker/?id=2'
+    dogeData = requests.get(apiURL)
+    dogeJson = dogeData.json()
+
+    dogeEmb = discord.Embed(title=dogeJson[0]['name'])
+    dogeEmb.add_field(name="Ticker: ", value=(dogeJson[0]["symbol"]))
+    dogeEmb.add_field(name="USD Price: ", value=(dogeJson[0]["price_usd"]))
+    dogeEmb.add_field(name="24hr change: ", value=(dogeJson[0]["percent_change_24h"]) + "%")
+    dogeEmb.add_field(name="7d change: ", value=(dogeJson[0]["percent_change_7d"]) + "%")
+
+    await ctx.send(embed=dogeEmb)
+
+#Ripple
+@bot.command()
+async def xrp(ctx):
+    apiURL = 'https://api.coinlore.net/api/ticker/?id=58'
+    xrpData = requests.get(apiURL)
+    xrpJson = xrpData.json()
+
+    xrpEmb = discord.Embed(title=xrpJson[0]['name'])
+    xrpEmb.add_field(name="Ticker: ", value=(xrpJson[0]["symbol"]))
+    xrpEmb.add_field(name="USD Price: ", value=(xrpJson[0]["price_usd"]))
+    xrpEmb.add_field(name="24hr change: ", value=(xrpJson[0]["percent_change_24h"]) + "%")
+    xrpEmb.add_field(name="7d change: ", value=(xrpJson[0]["percent_change_7d"]) + "%")
+
+    await ctx.send(embed=xrpEmb)
+#END CRYPTO
+
+#Binary conversion
 @bot.command()
 async def binary(ctx,arg):
     uInput = arg
