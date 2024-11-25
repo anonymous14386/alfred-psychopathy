@@ -55,6 +55,10 @@ async def help(ctx):
 
     help.add_field(name="Hash:", value="md5 (val), returns md5 hashed input\n sha256 (val) returns sha256 hashed input\n sha512 (val) returns sha512 hashed input")
 
+    help.add_field(name="Define:", value="def: returns dictionary definition of input")
+
+    help.add_field(name="Urban dictionary:", value="udef: returns urban dictionary definition of input")
+
     await ctx.send(embed=help)
 
 #Pokedex
@@ -542,7 +546,6 @@ async def hex2dec(ctx,arg):
 
     await ctx.send(embed=binEmb)
 
-
 #HASHING
 #MD5 hash
 @bot.command()
@@ -572,6 +575,21 @@ async def sha512(ctx, *, arg):
 
     await ctx.send(embed=sha512Emb)
 
+#Dictionaries
+#Dictionary api
+#https://api.dictionaryapi.dev/api/v2/entries/en/WORD
+
+@bot.command()
+async def define(ctx, arg):
+    uInput = arg
+    apiURL = 'https://api.dictionaryapi.dev/api/v2/entries/en/' + arg
+    dictData = requests.get(apiURL)
+    dictJson = dictData.json()
+
+    dictEmb = discord.Embed(title=dictJson[0]['word'] + " " + dictJson[0]['phonetic'])
+
+    dictEmb.add_field(name="Definition:", value=(dictJson[0]['meanings'][0]['definitions'][0]['definition']))
+
+    await ctx.send(embed=dictEmb)
+
 bot.run(BOT_TOKEN)
-
-
