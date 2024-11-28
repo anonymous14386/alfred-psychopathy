@@ -20,11 +20,9 @@ with open("config.json") as f:
 with open("cards.json") as f:
     cardData = json.load(f)
 
-#Pull from RockDB and key
+#Pull from RockDB 
 with open("rockDB.json") as f:
     rockDB = json.load(f)
-with open("rockDBKey.json") as f:
-    rockDBKey = json.load(f)
 
 
 BOT_TOKEN = data["bot-token"]
