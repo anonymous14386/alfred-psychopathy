@@ -20,6 +20,12 @@ with open("config.json") as f:
 with open("cards.json") as f:
     cardData = json.load(f)
 
+#Pull from RockDB and key
+with open("rockDB.json") as f:
+    rockDB = json.load(f)
+with open("rockDBKey.json") as f:
+    rockDBKey = json.load(f)
+
 
 BOT_TOKEN = data["bot-token"]
 CHANNEL_ID = data["channel-id"]
@@ -57,7 +63,10 @@ async def help(ctx):
 
     help.add_field(name="Define:", value="def: returns dictionary definition of input")
 
-    help.add_field(name="Urban dictionary:", value="udef: returns urban dictionary definition of input")
+    help.add_field(name="Rocks:", value="rock (val): returns information on a crystal\nrockrand: returns information on a random crystal\n rocklist: returns a list of the available crystals")
+
+    #help.add_field(name="Urban dictionary:", value="udef: returns urban dictionary definition of input")
+    #COMING SOON IF I CAN FIND THE API
 
     await ctx.send(embed=help)
 
@@ -591,5 +600,175 @@ async def define(ctx, arg):
     dictEmb.add_field(name="Definition:", value=(dictJson[0]['meanings'][0]['definitions'][0]['definition']))
 
     await ctx.send(embed=dictEmb)
+
+
+#Pull from RockDB and key
+#with open("rockDB.json") as f:
+#    rockDB = json.load(f)
+#with open("rockDBKey.json") as f:
+#    rockDBKey = json.load(f)
+
+@bot.command()
+async def rock(ctx, *, arg):
+    uInput = arg.lower()
+
+    #print(rockDB[uInput])
+
+    #http://www.rubberroomwithrats.com/Alfred/Crystals/
+
+    image = 'http://rubberroomwithrats.com/Alfred/Crystals/' + rockDB[uInput]["image"]
+
+    print(image)
+
+    RockEmb = discord.Embed(title=uInput.capitalize(), colour=0xC000FF)
+    RockEmb.add_field(name="Metaphysical properties:", value=(rockDB[uInput]["metaphysical"]))
+
+    RockEmb.set_image(url=image)
+    await ctx.send(embed = RockEmb)
+
+@bot.command()
+async def rockrand(ctx):
+    #num = random.randint(1,59)
+    num = random.randint(1,59)
+
+    if num == 1:
+        uInput = "agate"
+    elif num == 2:
+        uInput = "amber"
+    elif num == 3:
+        uInput = "amethyst"
+    elif num == 4:
+        uInput = "aventurine"
+    elif num == 5:
+        uInput = "aquamarine"
+    elif num == 6:
+        uInput = "azurite"
+    elif num == 7:
+        uInput = "amazonite"
+    elif num == 8:
+        uInput = "calcite"
+    elif num == 9:
+        uInput = "celestite"
+    elif num == 10:
+        uInput = "chrysocolla"
+    elif num == 11:
+        uInput = "chrysoprase"
+    elif num == 12:
+        uInput = "citrine"
+    elif num == 13:
+        uInput = "cobaltian calcite"
+    elif num == 14:
+        uInput = "copal"
+    elif num == 15:
+        uInput = "danburite"
+    elif num == 16:
+        uInput = "emerald"
+    elif num == 17:
+        uInput = "epidote"
+    elif num == 18:
+        uInput = "fairy stone"
+    elif num == 19:
+        uInput = "fire agate"
+    elif num == 20:
+        uInput = "fluorite"
+    elif num == 21:
+        uInput = "fuchsite"
+    elif num == 22:
+        uInput = "garnet"
+    elif num == 23:
+        uInput = "hematite"
+    elif num == 24:
+        uInput = "herkimer diamond"
+    elif num == 25:
+        uInput = "howlite"
+    elif num == 26:
+        uInput = "kunzite"
+    elif num == 27:
+        uInput = "kyanite"
+    elif num == 28:
+        uInput = "labradorite"
+    elif num == 29:
+        uInput = "lapis lazuli"
+    elif num == 30:
+        uInput = "lepidolite"
+    elif num == 31:
+        uInput = "lingam stone"
+    elif num == 32:
+        uInput = "malachite"
+    elif num == 33:
+        uInput = "moldavite"
+    elif num == 34:
+        uInput = "moonstone"
+    elif num == 35:
+        uInput = "obsidian"
+    elif num == 36:
+        uInput = "onyx"
+    elif num == 37:
+        uInput = "opal"
+    elif num == 38:
+        uInput = "peridot"
+    elif num == 39:
+        uInput = "petrified wood"
+    elif num == 40:
+        uInput = "prehnite"
+    elif num == 41:
+        uInput = "pyrite"
+    elif num == 42:
+        uInput = "quartz crystal"
+    elif num == 43:
+        uInput = "rhodochrosite"
+    elif num == 44:
+        uInput = "ruby"
+    elif num == 45:
+        uInput = "rutilated quartz"
+    elif num == 46:
+        uInput = "sapphire"
+    elif num == 47:
+        uInput = "selenite"
+    elif num == 48:
+        uInput = "silver"
+    elif num == 49:
+        uInput = "smoky quartz"
+    elif num == 50:
+        uInput = "sodalite"
+    elif num == 51:
+        uInput = "staurolite"
+    elif num == 52:
+        uInput = "stromatolite"
+    elif num == 53:
+        uInput = "tanzanite"
+    elif num == 54:
+        uInput = "tigereye"
+    elif num == 55:
+        uInput = "topaz"
+    elif num == 56:
+        uInput = "tourmaline"
+    elif num == 57:
+        uInput = "tourmalinated quartz"
+    elif num == 58:
+        uInput = "vanadinite"
+    elif num == 59:
+        uInput = "zircon"
+
+    image = 'http://rubberroomwithrats.com/Alfred/Crystals/' + rockDB[uInput]["image"]
+
+    RockEmb = discord.Embed(title=uInput.capitalize(), colour=0xC000FF)
+    RockEmb.add_field(name="Metaphysical properties:", value=(rockDB[uInput]["metaphysical"]))
+
+    RockEmb.set_image(url=image)
+    await ctx.send(embed = RockEmb)
+
+@bot.command()
+async def rocklist(ctx):
+    RockListEmb = discord.Embed(colour=0xC000FF)
+    RockListEmb.add_field(name="Rock List:", value="Agate, Amber, Amethyst, Aventurine, Aquamarine, Azurite, Amazonite, Calcite, Celestite, Chrysocolla, Chrysoprase, Citrine, Cobaltian Calcite, Copal, Danburite, Emerald, Epidote, Fairy Stone, Fire Agate, Fluorite, Fuchsite, Garnet, Hematite, Herkimer Diamond, Howlite, Kunzite, Kyanite, Labradorite, Lapis Lazuli, Lepidolite, Lingam Stone, Malachite, Moldavite, Moonstone, Obsidian, Onyx, Opal, Peridot, Petrified Wood, Prehnite, Pyrite, Quartz Crystal, Rhodochrosite, Ruby, Rutilated Quartz, Sapphire, Selenite, Silver, Smoky Quartz, Sodalite, Staurolite, Stromatolite, Tanzanite, Tigereye, Topaz, Tourmaline, Tourmalinated Quartz, Vanadinite, Zircon")
+    await ctx.send(embed = RockListEmb)
+
+@bot.command()
+async def abby(ctx):
+    await ctx.send("gail")
+@bot.command()
+async def Abby(ctx):
+    await ctx.send("gail")
 
 bot.run(BOT_TOKEN)
