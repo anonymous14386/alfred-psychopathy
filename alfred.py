@@ -20,7 +20,7 @@ with open("config.json") as f:
 with open("cards.json") as f:
     cardData = json.load(f)
 
-#Pull from RockDB 
+#Pull from RockDB
 with open("rockDB.json") as f:
     rockDB = json.load(f)
 
@@ -62,6 +62,8 @@ async def help(ctx):
     help.add_field(name="Define:", value="def: returns dictionary definition of input")
 
     help.add_field(name="Rocks:", value="rock (val): returns information on a crystal\nrockrand: returns information on a random crystal\n rocklist: returns a list of the available crystals")
+
+    help.add_field(name="Goldfish:", value="goldfish")
 
     #help.add_field(name="Urban dictionary:", value="udef: returns urban dictionary definition of input")
     #COMING SOON IF I CAN FIND THE API
@@ -761,6 +763,10 @@ async def rocklist(ctx):
     RockListEmb = discord.Embed(colour=0xC000FF)
     RockListEmb.add_field(name="Rock List:", value="Agate, Amber, Amethyst, Aventurine, Aquamarine, Azurite, Amazonite, Calcite, Celestite, Chrysocolla, Chrysoprase, Citrine, Cobaltian Calcite, Copal, Danburite, Emerald, Epidote, Fairy Stone, Fire Agate, Fluorite, Fuchsite, Garnet, Hematite, Herkimer Diamond, Howlite, Kunzite, Kyanite, Labradorite, Lapis Lazuli, Lepidolite, Lingam Stone, Malachite, Moldavite, Moonstone, Obsidian, Onyx, Opal, Peridot, Petrified Wood, Prehnite, Pyrite, Quartz Crystal, Rhodochrosite, Ruby, Rutilated Quartz, Sapphire, Selenite, Silver, Smoky Quartz, Sodalite, Staurolite, Stromatolite, Tanzanite, Tigereye, Topaz, Tourmaline, Tourmalinated Quartz, Vanadinite, Zircon")
     await ctx.send(embed = RockListEmb)
+
+@bot.command()
+async def goldfish(ctx):
+    await ctx.send("https://i.kym-cdn.com/photos/images/newsfeed/002/486/154/c06.gif")
 
 @bot.command()
 async def abby(ctx):
