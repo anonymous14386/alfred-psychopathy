@@ -61,7 +61,7 @@ async def help(ctx):
 
     help.add_field(name="Define:", value="def: returns dictionary definition of input")
 
-    help.add_field(name="Rocks:", value="rock (val): returns information on a crystal\nrockrand: returns information on a random crystal\n rocklist: returns a list of the available crystals")
+    help.add_field(name="Rocks:", value="rock (val): returns information on a crystal\nrockand: returns information on a random crystal\n rocklist: returns a list of the available crystals")
 
     help.add_field(name="Goldfish:", value="goldfish")
 
@@ -625,7 +625,7 @@ async def rock(ctx, *, arg):
     await ctx.send(file=file, embed = RockEmb)
 
 @bot.command()
-async def rockrand(ctx):
+async def rockand(ctx):
     #num = random.randint(1,59)
     num = random.randint(1,59)
 
