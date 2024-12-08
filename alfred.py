@@ -349,12 +349,13 @@ async def tarot(ctx, deck:int, amount: int):
         capitalized_description = description[0].upper() + description[1:]
 
         cardEmbed = discord.Embed(title=name, description=capitalized_description, colour=0xC000FF)
+        
+        
+        file = discord.File("Tarot/" + str(deck) + "/" + fileName)
+        cardEmbed.set_image(url="attachment://" + fileName)
+        await ctx.send(file=file, embed=cardEmbed)
 
-        print ("http://www.rubberroomwithrats.com/Alfred/Tarot/" + str(deck) + "/" + fileName)
-
-        cardEmbed.set_image(url="http://www.rubberroomwithrats.com/Alfred/Tarot/" + str(deck) + "/" + fileName)
-
-        await ctx.send(embed=cardEmbed)
+        #await ctx.send(embed=cardEmbed)
 
 #Geoip
 @bot.command()
@@ -612,19 +613,14 @@ async def define(ctx, arg):
 async def rock(ctx, *, arg):
     uInput = arg.lower()
 
-    #print(rockDB[uInput])
-
-    #http://www.rubberroomwithrats.com/Alfred/Crystals/
-
-    image = 'http://rubberroomwithrats.com/Alfred/Crystals/' + rockDB[uInput]["image"]
-
-    print(image)
-
     RockEmb = discord.Embed(title=uInput.capitalize(), colour=0xC000FF)
     RockEmb.add_field(name="Metaphysical properties:", value=(rockDB[uInput]["metaphysical"]))
+    fileName = uInput.replace(' ', '') + ".jpg"
 
-    RockEmb.set_image(url=image)
-    await ctx.send(embed = RockEmb)
+    file = discord.File("Rocks/" + fileName)
+
+    RockEmb.set_image(url="attachment://" + fileName)
+    await ctx.send(file=file, embed = RockEmb)
 
 @bot.command()
 async def rockrand(ctx):
@@ -750,13 +746,15 @@ async def rockrand(ctx):
     elif num == 59:
         uInput = "zircon"
 
-    image = 'http://rubberroomwithrats.com/Alfred/Crystals/' + rockDB[uInput]["image"]
-
     RockEmb = discord.Embed(title=uInput.capitalize(), colour=0xC000FF)
     RockEmb.add_field(name="Metaphysical properties:", value=(rockDB[uInput]["metaphysical"]))
 
-    RockEmb.set_image(url=image)
-    await ctx.send(embed = RockEmb)
+    fileName = uInput.replace(' ', '') + ".jpg"
+
+    file = discord.File("Rocks/" + fileName)
+
+    RockEmb.set_image(url="attachment://" + fileName)
+    await ctx.send(file=file, embed = RockEmb)
 
 @bot.command()
 async def rocklist(ctx):
@@ -774,5 +772,6 @@ async def abby(ctx):
 @bot.command()
 async def Abby(ctx):
     await ctx.send("gail")
+
 
 bot.run(BOT_TOKEN)
