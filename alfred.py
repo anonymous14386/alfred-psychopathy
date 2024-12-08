@@ -65,6 +65,8 @@ async def help(ctx):
 
     help.add_field(name="Goldfish:", value="goldfish")
 
+    help.add_field(name="Robot hash:", value="robohash (val): returns a custom generated robot based on a text input")
+
     #help.add_field(name="Urban dictionary:", value="udef: returns urban dictionary definition of input")
     #COMING SOON IF I CAN FIND THE API
 
@@ -773,5 +775,16 @@ async def abby(ctx):
 async def Abby(ctx):
     await ctx.send("gail")
 
+@bot.command()
+async def robohash(ctx, *, arg):
+    uInput = arg.replace(" ","%20")
+
+    link = "https://robohash.org/" + uInput
+
+    RobotEmb = discord.Embed(title=("Robot hash of " + arg))
+
+    RobotEmb.set_image(url=link)
+
+    await ctx.send(embed = RobotEmb)
 
 bot.run(BOT_TOKEN)
