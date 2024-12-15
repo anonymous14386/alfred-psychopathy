@@ -67,6 +67,8 @@ async def help(ctx):
 
     help.add_field(name="Robot hash:", value="robohash (val): returns a custom generated robot based on a text input")
 
+    help.add_field(name="Coin flip: ", value="coin (x): flips (x) coins")
+
     #help.add_field(name="Urban dictionary:", value="udef: returns urban dictionary definition of input")
     #COMING SOON IF I CAN FIND THE API
 
@@ -786,5 +788,32 @@ async def robohash(ctx, *, arg):
     RobotEmb.set_image(url=link)
 
     await ctx.send(embed = RobotEmb)
+
+@bot.command()
+async def coin(ctx):
+    num = random.randint(0,1)
+    if num == 0:
+        cFlip = "heads"
+        print(cFlip)
+    else:
+        cFlip = "tails"
+        print(cFlip)
+
+    fileName = "Coins/" + cFlip +  ".png"
+    print(fileName)
+    CoinEmb = discord.Embed(title=cFlip.capitalize(), colour=0xC000FF)
+    #CoinEmb.add_field(name="Metaphysical properties:", value=(rockDB[uInput]["metaphysical"]))
+    #file = discord.File(fileName)
+    #print(file)
+    file = discord.File(fileName)
+    CoinEmb.set_image(url="attachment://" + fileName)
+    await ctx.send(file=file, embed = CoinEmb)
+
+
+#@bot.command()
+#async def cowsay(ctx, *, arg):
+
+
+    
 
 bot.run(BOT_TOKEN)
