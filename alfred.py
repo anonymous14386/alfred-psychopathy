@@ -1,5 +1,4 @@
 #Setup stuff
-#testpus
 import asyncio
 import json
 import discord
