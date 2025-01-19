@@ -1,5 +1,5 @@
 #Setup stuff
-#testpush
+#testpus
 import asyncio
 import json
 import discord
