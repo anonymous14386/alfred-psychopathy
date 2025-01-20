@@ -1,4 +1,5 @@
 #Setup stuff
+
 import asyncio
 import json
 import discord
