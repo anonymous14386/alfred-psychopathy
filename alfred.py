@@ -814,10 +814,13 @@ async def coin(ctx):
 async def eight(ctx):
     num = random.randint(1,11)
     
-    fileName = "8ball/" + toString(num) + ".png" 
+    fileName = "8ball/" + str(num) + ".png" 
     
-    BallEmb = discord.Embed()
-
+    BallEmb = discord.Embed(title="~Your Fortune~", colour = 0xC000FF)
+    file = discord.File(fileName)
+    
+    BallEmb.set_image(url="attachment://" + fileName)
+    await ctx.send(file=file, embed = BallEmb)
 
 
 #@bot.command()
