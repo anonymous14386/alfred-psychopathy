@@ -810,6 +810,15 @@ async def coin(ctx):
     CoinEmb.set_image(url="attachment://" + fileName)
     await ctx.send(file=file, embed = CoinEmb)
 
+@bot.command()
+async def eight(ctx):
+    num = random.randint(1,11)
+    
+    fileName = "8ball/" + toString(num) + ".png" 
+    
+    BallEmb = discord.Embed()
+
+
 
 #@bot.command()
 #async def cowsay(ctx, *, arg):
