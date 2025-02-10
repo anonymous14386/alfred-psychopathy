@@ -1,4 +1,5 @@
 #Setup stuff
+
 import asyncio
 import json
 import discord
@@ -779,53 +780,5 @@ async def abby(ctx):
 @bot.command()
 async def Abby(ctx):
     await ctx.send("gail")
-
-@bot.command()
-async def robohash(ctx, *, arg):
-    uInput = arg.replace(" ","%20")
-
-    link = "https://robohash.org/" + uInput
-
-    RobotEmb = discord.Embed(title=("Robot hash of " + arg))
-
-    RobotEmb.set_image(url=link)
-
-    await ctx.send(embed = RobotEmb)
-
-@bot.command()
-async def coin(ctx):
-    num = random.randint(0,1)
-    if num == 0:
-        cFlip = "heads"
-        print(cFlip)
-    else:
-        cFlip = "tails"
-        print(cFlip)
-
-    fileName = "Coins/" + cFlip +  ".png"
-    print(fileName)
-    CoinEmb = discord.Embed(title=cFlip.capitalize(), colour=0xC000FF)
-    #CoinEmb.add_field(name="Metaphysical properties:", value=(rockDB[uInput]["metaphysical"]))
-    #file = discord.File(fileName)
-    #print(file)
-    file = discord.File(fileName)
-    CoinEmb.set_image(url="attachment://" + fileName)
-    await ctx.send(file=file, embed = CoinEmb)
-
-@bot.command()
-async def cum(ctx):
-    await ctx.send("https://i.makeagif.com/media/3-07-2016/_75awn.gif")
-
-@bot.command()
-async def kribidi(ctx):
-    await ctx.send("https://tenor.com/view/krill-skbidi-kribidi-kribidi-toilet-sea-animal-gif-12524426980275465284")
-
-
-
-#@bot.command()
-#async def cowsay(ctx, *, arg):
-
-
-    
 
 bot.run(BOT_TOKEN)
