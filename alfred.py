@@ -86,7 +86,7 @@ async def help(ctx):
 
     help.add_field(name="Robot hash:", value="robohash (val): returns a custom generated robot based on a text input")
 
-    help.add_field(name="Coin flip: ", value="coin (x): flips (x) coins")
+    help.add_field(name="Coin flip: ", value="coin (x): flips (x) coins, make SURE you specify a number even if it's 1")
 
     help.add_field(name="8Ball: ", value="eight: returns a magic 8ball reading")
 
@@ -313,6 +313,32 @@ async def poke(ctx,arg):
         await ctx.send(embed = embed)
     except:
         await ctx.send(embed=error)
+
+#Coin flip
+@bot.command()
+async def coin(ctx, amount: int):
+
+    try:
+        for i in range(amount):
+            num = random.randint(0,1)
+            if num == 1:
+                coin="heads"
+                coinEmb = discord.Embed(title="~Heads~", colour=0xC000FF)
+
+                file = discord.File("Coins/heads.png")
+                coinEmb.set_image(url="attachment://Coins/heads.png")
+                await ctx.send(file=file, embed=coinEmb)
+            else:
+                coin="tails"
+                coinEmb = discord.Embed(title="~Tails~", colour=0xC000FF)
+
+                file = discord.File("Coins/tails.png")
+                coinEmb.set_image(url="attachment://Coins/tails.png")
+                await ctx.send(file=file, embed=coinEmb)
+            
+    except:
+        await ctx.send(embed=error)
+
 #Tarot
 @bot.command()
 async def tarot(ctx, deck:int, amount: int):
