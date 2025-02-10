@@ -61,9 +61,13 @@ async def help(ctx):
 
     help.add_field(name="Define:", value="def: returns dictionary definition of input")
 
-    help.add_field(name="Rocks:", value="rock (val): returns information on a crystal\nrockrand: returns information on a random crystal\n rocklist: returns a list of the available crystals")
+    help.add_field(name="Rocks:", value="rock (val): returns information on a crystal\nrockand: returns information on a random crystal\n rocklist: returns a list of the available crystals")
 
     help.add_field(name="Goldfish:", value="goldfish")
+
+    help.add_field(name="Robot hash:", value="robohash (val): returns a custom generated robot based on a text input")
+
+    help.add_field(name="Coin flip: ", value="coin (x): flips (x) coins")
 
     #help.add_field(name="Urban dictionary:", value="udef: returns urban dictionary definition of input")
     #COMING SOON IF I CAN FIND THE API
@@ -77,14 +81,17 @@ async def poke(ctx,arg):
     pokeLowerList = open("nameLower.txt", "r")
     pokeLowerListDatat = pokeLowerList.read()
     pokeLowerListData = pokeLowerListDatat.split(',')
+    pokeLowerList.close()
 
     pokeList = open("name.txt", "r")
     pokeListDatat = pokeList.read()
     pokeListData = pokeListDatat.split(',')
+    pokeList.close()
 
     pokeTypeList = open("type.txt", "r")
     pokeTypeDatat = pokeTypeList.read()
     pokeTypeData = pokeTypeDatat.split(',')
+    pokeTypeList.close()
 
     uInput = arg
 
@@ -349,12 +356,13 @@ async def tarot(ctx, deck:int, amount: int):
         capitalized_description = description[0].upper() + description[1:]
 
         cardEmbed = discord.Embed(title=name, description=capitalized_description, colour=0xC000FF)
+        
+        
+        file = discord.File("Tarot/" + str(deck) + "/" + fileName)
+        cardEmbed.set_image(url="attachment://" + fileName)
+        await ctx.send(file=file, embed=cardEmbed)
 
-        print ("http://www.rubberroomwithrats.com/Alfred/Tarot/" + str(deck) + "/" + fileName)
-
-        cardEmbed.set_image(url="http://www.rubberroomwithrats.com/Alfred/Tarot/" + str(deck) + "/" + fileName)
-
-        await ctx.send(embed=cardEmbed)
+        #await ctx.send(embed=cardEmbed)
 
 #Geoip
 @bot.command()
@@ -612,22 +620,17 @@ async def define(ctx, arg):
 async def rock(ctx, *, arg):
     uInput = arg.lower()
 
-    #print(rockDB[uInput])
-
-    #http://www.rubberroomwithrats.com/Alfred/Crystals/
-
-    image = 'http://rubberroomwithrats.com/Alfred/Crystals/' + rockDB[uInput]["image"]
-
-    print(image)
-
     RockEmb = discord.Embed(title=uInput.capitalize(), colour=0xC000FF)
     RockEmb.add_field(name="Metaphysical properties:", value=(rockDB[uInput]["metaphysical"]))
+    fileName = uInput.replace(' ', '') + ".jpg"
 
-    RockEmb.set_image(url=image)
-    await ctx.send(embed = RockEmb)
+    file = discord.File("Rocks/" + fileName)
+
+    RockEmb.set_image(url="attachment://" + fileName)
+    await ctx.send(file=file, embed = RockEmb)
 
 @bot.command()
-async def rockrand(ctx):
+async def rockand(ctx):
     #num = random.randint(1,59)
     num = random.randint(1,59)
 
@@ -750,13 +753,15 @@ async def rockrand(ctx):
     elif num == 59:
         uInput = "zircon"
 
-    image = 'http://rubberroomwithrats.com/Alfred/Crystals/' + rockDB[uInput]["image"]
-
     RockEmb = discord.Embed(title=uInput.capitalize(), colour=0xC000FF)
     RockEmb.add_field(name="Metaphysical properties:", value=(rockDB[uInput]["metaphysical"]))
 
-    RockEmb.set_image(url=image)
-    await ctx.send(embed = RockEmb)
+    fileName = uInput.replace(' ', '') + ".jpg"
+
+    file = discord.File("Rocks/" + fileName)
+
+    RockEmb.set_image(url="attachment://" + fileName)
+    await ctx.send(file=file, embed = RockEmb)
 
 @bot.command()
 async def rocklist(ctx):
@@ -774,5 +779,53 @@ async def abby(ctx):
 @bot.command()
 async def Abby(ctx):
     await ctx.send("gail")
+
+@bot.command()
+async def robohash(ctx, *, arg):
+    uInput = arg.replace(" ","%20")
+
+    link = "https://robohash.org/" + uInput
+
+    RobotEmb = discord.Embed(title=("Robot hash of " + arg))
+
+    RobotEmb.set_image(url=link)
+
+    await ctx.send(embed = RobotEmb)
+
+@bot.command()
+async def coin(ctx):
+    num = random.randint(0,1)
+    if num == 0:
+        cFlip = "heads"
+        print(cFlip)
+    else:
+        cFlip = "tails"
+        print(cFlip)
+
+    fileName = "Coins/" + cFlip +  ".png"
+    print(fileName)
+    CoinEmb = discord.Embed(title=cFlip.capitalize(), colour=0xC000FF)
+    #CoinEmb.add_field(name="Metaphysical properties:", value=(rockDB[uInput]["metaphysical"]))
+    #file = discord.File(fileName)
+    #print(file)
+    file = discord.File(fileName)
+    CoinEmb.set_image(url="attachment://" + fileName)
+    await ctx.send(file=file, embed = CoinEmb)
+
+@bot.command()
+async def cum(ctx):
+    await ctx.send("https://i.makeagif.com/media/3-07-2016/_75awn.gif")
+
+@bot.command()
+async def kribidi(ctx):
+    await ctx.send("https://tenor.com/view/krill-skbidi-kribidi-kribidi-toilet-sea-animal-gif-12524426980275465284")
+
+
+
+#@bot.command()
+#async def cowsay(ctx, *, arg):
+
+
+    
 
 bot.run(BOT_TOKEN)
