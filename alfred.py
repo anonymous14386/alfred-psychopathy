@@ -39,14 +39,8 @@ async def on_ready():
     print("Alfred online")
     channel = bot.get_channel(CHANNEL_ID)
 
-error = discord.Embed(title="Error :(")
+error = discord.Embed(title="Error :(", colour=0xFF0000)
 error.add_field(name="An error occured", value="Please try a different input")
-#try:
-    
-#except:
-#    await ctx.send(embed=error)
-
-#await ctx.send(embed=error)
 
 pokeLowerList = open("nameLower.txt", "r")
 pokeLowerListDatat = pokeLowerList.read()
@@ -93,6 +87,8 @@ async def help(ctx):
     help.add_field(name="Robot hash:", value="robohash (val): returns a custom generated robot based on a text input")
 
     help.add_field(name="Coin flip: ", value="coin (x): flips (x) coins")
+
+    help.add_field(name="8Ball: ", value="eight: returns a magic 8ball reading")
 
     #help.add_field(name="Urban dictionary:", value="udef: returns urban dictionary definition of input")
     #COMING SOON IF I CAN FIND THE API
@@ -863,5 +859,25 @@ async def robohash(ctx, *, arg):
         await ctx.send(embed=roboEmb)
     except:
         await ctx.send(embed=error)
+
+@bot.command()
+async def eight(ctx):
+    try:
+        num = random.randint(1,13)
+
+        ballEmb = discord.Embed(title="~Your Fortune~", colour=0xC000FF)
+
+        file = discord.File("8ball/" + str(num) + ".png")
+        ballEmb.set_image(url="attachment://" + "8ball/" + str(num) + ".png")
+        await ctx.send(file=file, embed=ballEmb)
+
+        #image = "attachment://" + "8ball/" + str(num) + ".png"
+        #eightEmb = discord.Embed(colour=0x00FF00)
+        #eightEmb.set_image(url="attachment://" + image)
+        #print(image)
+        #await ctx.send(embed=eightEmb)
+    except:
+        await ctx.send(embed=error)
+
 
 bot.run(BOT_TOKEN)
